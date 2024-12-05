@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using NaturalSelection.Generics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,11 +50,14 @@ namespace NaturalSelection.EnemyPatches
         {
             if (UpdateTimer <= 0f)
             {
-                EnemyAIPatch.UpdateListInsideDictionrary(__instance, EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance), __instance), beeList[__instance].enemyTypes, __instance, true));
-                if (EnemyAIPatch.globalEnemyLists[__instance.GetType()].Contains(__instance))
+                if (RoundManagerPatch.RequestUpdateList(__instance))
                 {
-                    if (logBees && debugSpam) Script.Logger.LogError(EnemyAIPatch.DebugStringHead(__instance) + " FOUND ITSELF IN THE EnemyList! Removing...");
-                    EnemyAIPatch.globalEnemyLists[__instance.GetType()].Remove(__instance);
+                    NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[__instance.GetType()] = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance), __instance), beeList[__instance].enemyTypes, __instance, true);
+                    if (EnemyAIPatch.globalEnemyLists[__instance.GetType()].Contains(__instance))
+                    {
+                        if (logBees && debugSpam) Script.Logger.LogError(EnemyAIPatch.DebugStringHead(__instance) + " FOUND ITSELF IN THE EnemyList! Removing...");
+                        EnemyAIPatch.globalEnemyLists[__instance.GetType()].Remove(__instance);
+                    }
                 }
                 UpdateTimer = 0.2f;
             }

@@ -53,6 +53,7 @@ public class Script : BaseUnityPlugin
         {
             Logger.LogError("Failed to setup library!");
         }
+        Harmony.PatchAll(typeof(RoundManagerPatch));
         if (BoundingConfig.loadSandworms.Value)Harmony.PatchAll(typeof(SandWormAIPatch));
         if (BoundingConfig.loadBlob.Value)Harmony.PatchAll(typeof(BlobAIPatch));
         if (BoundingConfig.loadHoardingBugs.Value)Harmony.PatchAll(typeof(HoarderBugPatch));

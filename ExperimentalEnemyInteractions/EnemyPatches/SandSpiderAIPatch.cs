@@ -2,6 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 using System.Linq;
+using NaturalSelection.Generics;
 
 namespace NaturalSelection.EnemyPatches
 {
@@ -60,8 +61,10 @@ namespace NaturalSelection.EnemyPatches
              {
                  __instance.CalculateSpiderPathToPosition();
              }*/
-
-            EnemyAIPatch.UpdateListInsideDictionrary(__instance, EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance), __instance));
+            if (RoundManagerPatch.RequestUpdateList(__instance))
+            {
+                NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[__instance.GetType()] = EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance), __instance);
+            }
             spiderData.enemiesInLOSDictionary = EnemyAIPatch.GetEnemiesInLOS(__instance, EnemyAIPatch.globalEnemyLists[__instance.GetType()], 80f, 15, 2f);
 
             if (spiderData.enemiesInLOSDictionary.Count > 0)
