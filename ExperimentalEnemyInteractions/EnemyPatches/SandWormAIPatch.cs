@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
+using NaturalSelection.Generics;
 using UnityEngine;
 
 namespace NaturalSelection.EnemyPatches
@@ -61,7 +62,10 @@ namespace NaturalSelection.EnemyPatches
 
             if (SandwormData.refreshCDtime <= 0)
             {
-                EnemyAIPatch.UpdateListInsideDictionrary(__instance, EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), targetedTypes, __instance));
+                if (RoundManagerPatch.RequestUpdateList(__instance))
+                {
+                    NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[__instance.GetType()] = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), targetedTypes, __instance, false, false);
+                }
                 SandwormData.closestEnemy = EnemyAIPatch.FindClosestEnemy(EnemyAIPatch.globalEnemyLists[__instance.GetType()] ,SandwormData.closestEnemy, __instance);
                 SandwormData.refreshCDtime = 0.2f;
             }

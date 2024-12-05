@@ -119,34 +119,11 @@ namespace NaturalSelection.EnemyPatches
     {
         public static bool EnemyIsImmortal(EnemyAI instance)
         {
-                if (instance is NutcrackerEnemyAI)
-                {
-                    if (instance.currentBehaviourStateIndex == 0)
-                    {
-                        return true;
-                    }
-                }
-                if (instance is JesterAI)
-                {
-                    return true;
-                }
-                if(instance is BlobAI)
-                    {
-                    return true;
-                }
-                if(instance is SpringManAI)
-                    {
-                    return true;
-                }
-                if(instance is SandWormAI)
-                    {
-                    return true;
-                }
-                if (instance is ButlerBeesEnemyAI)
-                {
-                    return true;
-                }
-            return false;
+            if (instance.enemyType.canDie)
+            {
+                return false;
+            }
+            else return true;
         }
     }
 }
