@@ -51,11 +51,11 @@ namespace NaturalSelection.EnemyPatches
 
             blobData.timeSinceHittingLocalMonster += Time.deltaTime;
 
-			if (RoundManagerPatch.RequestUpdateList(__instance))
-			{
-				//List<EnemyAI> tempList = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), null, __instance, false, true);
-                NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[__instance.GetType()] = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), null, __instance, false, true);
-			}
+            //if (RoundManagerPatch.RequestUpdateList(__instance))
+            //{
+            //List<EnemyAI> tempList = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), null, __instance, false, true);
+            RoundManagerPatch.RequestUpdateList(__instance, EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), null, __instance, false, true));
+			//}
 			List<EnemyAI>? tempDeadList = EnemyAIPatch.GetInsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true , 2), __instance);
 
 			/*for (int i = 0; i < tempList.Count; i++)

@@ -62,11 +62,14 @@ namespace NaturalSelection.EnemyPatches
 
             if (SandwormData.refreshCDtime <= 0)
             {
-                if (RoundManagerPatch.RequestUpdateList(__instance))
+                // if (RoundManagerPatch.RequestUpdateList(__instance))
+                // {
+                RoundManagerPatch.RequestUpdateList(__instance, EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), targetedTypes, __instance, false, false));
+                // }
+                if (EnemyAIPatch.globalEnemyLists.ContainsKey(__instance.GetType()))
                 {
-                    NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[__instance.GetType()] = EnemyAIPatch.FilterEnemyList(EnemyAIPatch.GetOutsideEnemyList(EnemyAIPatch.GetCompleteList(__instance, true, 0), __instance), targetedTypes, __instance, false, false);
+                    SandwormData.closestEnemy = EnemyAIPatch.FindClosestEnemy(EnemyAIPatch.globalEnemyLists[__instance.GetType()], SandwormData.closestEnemy, __instance);
                 }
-                SandwormData.closestEnemy = EnemyAIPatch.FindClosestEnemy(EnemyAIPatch.globalEnemyLists[__instance.GetType()] ,SandwormData.closestEnemy, __instance);
                 SandwormData.refreshCDtime = 0.2f;
             }
             if (SandwormData.refreshCDtime > 0)

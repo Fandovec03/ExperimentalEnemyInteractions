@@ -20,22 +20,23 @@ namespace NaturalSelection.Generics
             if (Time.realtimeSinceStartup >= nextUpdate)
             {
                 checkedList.Clear();
+                nextUpdate = Time.realtimeSinceStartup + 1;
             }
         }
 
-        public static bool RequestUpdateList(EnemyAI instance)
+        public static void RequestUpdateList(EnemyAI instance, List<EnemyAI> list)
         {
             if (!checkedList.Contains(instance.GetType()))
             {
                 checkedList.Add(instance.GetType());
-                //NaturalSelectionLib.NaturalSelectionLib.UpdateListInsideDictionrary(enemyList);
-                Script.Logger.LogDebug(EnemyAIPatch.DebugStringHead(instance) + " got true from RequestUpdateList");
-                return true;//NaturalSelectionLib.NaturalSelectionLib.globalEnemyLists[instance.GetType()];
+                NaturalSelectionLib.NaturalSelectionLib.UpdateListInsideDictionrary(instance,list);
+                Script.Logger.LogDebug(EnemyAIPatch.DebugStringHead(instance) + " got true from RequestUpdateList. " + Time.realtimeSinceStartup + ", next update: " + nextUpdate);
+                //return true;
             }
             else
             {
-                Script.Logger.LogDebug(EnemyAIPatch.DebugStringHead(instance) + " got false from RequestUpdateList");
-                return false;
+                Script.Logger.LogDebug(EnemyAIPatch.DebugStringHead(instance) + " got false from RequestUpdateList " + Time.realtimeSinceStartup + ", next update: " + nextUpdate);
+                //return false;
             }
         }
     }
